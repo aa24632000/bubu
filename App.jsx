@@ -3,9 +3,10 @@ import liff from '@line/liff';
 
 function App() {
   const [profile, setProfile] = useState(null);
-  const [error, setError] = useState(null);
+  const [highlight, setHighlight] = useState(""); 
+  const [expense, setExpense] = useState(""); 
 
-  // 這是之後要填 LIFF ID 的地方
+  // 這裡是之後要填 LIFF ID 的地方
   const liffId = "12345678-abcde"; 
 
   useEffect(() => {
@@ -16,42 +17,44 @@ function App() {
         } else {
           liff.login();
         }
-      })
-      .catch((err) => setError(err.toString()));
+      }).catch(console.error);
   }, []);
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif', backgroundColor: '#fdfbf7', minHeight: '100vh' }}>
+    <div style={{ padding: '20px', fontFamily: 'sans-serif', backgroundColor: '#f9fbf2', minHeight: '100vh', color: '#4a5d4e' }}>
       <header style={{ textAlign: 'center', marginBottom: '30px' }}>
-        <h1 style={{ color: '#5b8a6a' }}>🍃 Pupu Says 家長控制台</h1>
-        {profile && <p>早安，{profile.displayName}！今天也要幫 Pupu 加油喔！</p>}
+        <h1 style={{ fontSize: '24px', color: '#5b8a6a' }}>✨ 小步拾光</h1>
+        {profile && <p>午安，{profile.displayName}。今天也要溫柔對待自己。</p>}
       </header>
 
-      <div style={{ background: 'white', borderRadius: '15px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-        <h3 style={{ borderBottom: '2px solid #e0e0e0', paddingBottom: '10px' }}>小孩學習狀態</h3>
-        
-        <div style={{ margin: '15px 0', padding: '10px', backgroundColor: '#fff9e6', borderRadius: '10px' }}>
-          <strong>👦 Pupu (5年級)</strong>
-          <p>今日進度：2 個英文字根 (未完成)</p>
-          <div style={{ width: '100%', backgroundColor: '#ddd', height: '10px', borderRadius: '5px' }}>
-            <div style={{ width: '30%', backgroundColor: '#ffcc00', height: '10px', borderRadius: '5px' }}></div>
-          </div>
-        </div>
+      <section style={cardStyle}>
+        <h3 style={titleStyle}>📔 今日拾光</h3>
+        <textarea 
+          placeholder="記下一件微小但美好的事..." 
+          style={inputStyle}
+          value={highlight}
+          onChange={(e) => setHighlight(e.target.value)}
+        />
+      </section>
 
-        <div style={{ margin: '15px 0', padding: '10px', backgroundColor: '#e6f3ff', borderRadius: '10px' }}>
-          <strong>🧑 哥哥 (8年級)</strong>
-          <p>今日進度：Excel VBA 基礎練習 (已完成)</p>
-          <div style={{ width: '100%', backgroundColor: '#ddd', height: '10px', borderRadius: '5px' }}>
-            <div style={{ width: '100%', backgroundColor: '#4a90e2', height: '10px', borderRadius: '5px' }}></div>
-          </div>
+      <section style={cardStyle}>
+        <h3 style={titleStyle}>💰 溫柔記帳</h3>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <input type="number" placeholder="金額" style={{ ...inputStyle, flex: 1 }} value={expense} onChange={(e) => setExpense(e.target.value)} />
+          <button style={buttonStyle}>記錄</button>
         </div>
-      </div>
-      
-      <footer style={{ marginTop: '40px', textAlign: 'center', color: '#888', fontSize: '12px' }}>
-        © 2026 Pupu Says - 給孩子最好的陪伴
+      </section>
+
+      <footer style={{ textAlign: 'center', marginTop: '40px', fontSize: '12px', color: '#a0a0a0' }}>
+        小步走，拾起每一刻的時光。
       </footer>
     </div>
   );
 }
+
+const cardStyle = { background: '#ffffff', borderRadius: '20px', padding: '20px', marginBottom: '20px', boxShadow: '0 8px 15px rgba(0,0,0,0.05)' };
+const titleStyle = { margin: '0 0 10px 0', fontSize: '18px', color: '#7a9d8c' };
+const inputStyle = { width: '100%', padding: '10px', borderRadius: '10px', border: '1px solid #ddd', fontSize: '16px' };
+const buttonStyle = { backgroundColor: '#5b8a6a', color: 'white', border: 'none', borderRadius: '10px', padding: '10px 20px' };
 
 export default App;
